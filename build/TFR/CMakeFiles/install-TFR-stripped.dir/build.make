@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /n/eecs583b/home/ssurapan/shoestring
+CMAKE_SOURCE_DIR = /n/eecs583b/home/ssurapan/EECS573_Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /n/eecs583b/home/ssurapan/shoestring/build
+CMAKE_BINARY_DIR = /n/eecs583b/home/ssurapan/EECS573_Final/build
 
 # Utility rule file for install-TFR-stripped.
 
@@ -67,7 +67,7 @@ include TFR/CMakeFiles/install-TFR-stripped.dir/compiler_depend.make
 include TFR/CMakeFiles/install-TFR-stripped.dir/progress.make
 
 TFR/CMakeFiles/install-TFR-stripped:
-	cd /n/eecs583b/home/ssurapan/shoestring/build/TFR && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="TFR" -DCMAKE_INSTALL_DO_STRIP=1 -P /n/eecs583b/home/ssurapan/shoestring/build/cmake_install.cmake
+	cd /n/eecs583b/home/ssurapan/EECS573_Final/build/TFR && /usr/bin/cmake -DCMAKE_INSTALL_COMPONENT="TFR" -DCMAKE_INSTALL_DO_STRIP=1 -P /n/eecs583b/home/ssurapan/EECS573_Final/build/cmake_install.cmake
 
 install-TFR-stripped: TFR/CMakeFiles/install-TFR-stripped
 install-TFR-stripped: TFR/CMakeFiles/install-TFR-stripped.dir/build.make
@@ -78,10 +78,10 @@ TFR/CMakeFiles/install-TFR-stripped.dir/build: install-TFR-stripped
 .PHONY : TFR/CMakeFiles/install-TFR-stripped.dir/build
 
 TFR/CMakeFiles/install-TFR-stripped.dir/clean:
-	cd /n/eecs583b/home/ssurapan/shoestring/build/TFR && $(CMAKE_COMMAND) -P CMakeFiles/install-TFR-stripped.dir/cmake_clean.cmake
+	cd /n/eecs583b/home/ssurapan/EECS573_Final/build/TFR && $(CMAKE_COMMAND) -P CMakeFiles/install-TFR-stripped.dir/cmake_clean.cmake
 .PHONY : TFR/CMakeFiles/install-TFR-stripped.dir/clean
 
 TFR/CMakeFiles/install-TFR-stripped.dir/depend:
-	cd /n/eecs583b/home/ssurapan/shoestring/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583b/home/ssurapan/shoestring /n/eecs583b/home/ssurapan/shoestring/TFR /n/eecs583b/home/ssurapan/shoestring/build /n/eecs583b/home/ssurapan/shoestring/build/TFR /n/eecs583b/home/ssurapan/shoestring/build/TFR/CMakeFiles/install-TFR-stripped.dir/DependInfo.cmake --color=$(COLOR)
+	cd /n/eecs583b/home/ssurapan/EECS573_Final/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583b/home/ssurapan/EECS573_Final /n/eecs583b/home/ssurapan/EECS573_Final/TFR /n/eecs583b/home/ssurapan/EECS573_Final/build /n/eecs583b/home/ssurapan/EECS573_Final/build/TFR /n/eecs583b/home/ssurapan/EECS573_Final/build/TFR/CMakeFiles/install-TFR-stripped.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : TFR/CMakeFiles/install-TFR-stripped.dir/depend
 

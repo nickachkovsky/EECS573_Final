@@ -35,6 +35,15 @@ namespace TFR
 
         bool runOnFunction(Function &F) override
         {
+
+            for (BasicBlock &BB : F)
+            {
+                errs() << BB.getName() << "\n";
+                for (Instruction &I : BB)
+                {
+                    errs() << I.getOpcodeName() << '\n';
+                }
+            }
             return false;
         }
 

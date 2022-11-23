@@ -73,8 +73,8 @@ clang -fprofile-instr-generate ${source_program}.prof.bc -o ${source_program}_pr
 llvm-profdata merge -o ${source_program}.profdata default.profraw
 
 # Use opt three times to compile with specific passes
-opt -O2 -enable-new-pm=0 -o ${source_program}.none.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata < ${source_program}.bc > /dev/null
-opt -O2 -enable-new-pm=0 -o ${source_program}.tfr.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata -load ${llvm_library} ${passes} < ${source_program}.bc > /dev/null
+opt -enable-new-pm=0 -o ${source_program}.none.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata < ${source_program}.bc > /dev/null
+opt -enable-new-pm=0 -o ${source_program}.tfr.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata -load ${llvm_library} ${passes} < ${source_program}.bc > /dev/null
 
 # Generate binary excutable before TFR: Unoptimized code
 clang ${source_program}.none.bc -o ${source_program}_no_tfr

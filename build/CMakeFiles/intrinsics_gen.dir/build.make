@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /n/eecs583b/home/ssurapan/shoestring
+CMAKE_SOURCE_DIR = /n/eecs583b/home/ssurapan/EECS573_Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /n/eecs583b/home/ssurapan/shoestring/build
+CMAKE_BINARY_DIR = /n/eecs583b/home/ssurapan/EECS573_Final/build
 
 # Utility rule file for intrinsics_gen.
 
@@ -78,6 +78,6 @@ CMakeFiles/intrinsics_gen.dir/clean:
 .PHONY : CMakeFiles/intrinsics_gen.dir/clean
 
 CMakeFiles/intrinsics_gen.dir/depend:
-	cd /n/eecs583b/home/ssurapan/shoestring/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583b/home/ssurapan/shoestring /n/eecs583b/home/ssurapan/shoestring /n/eecs583b/home/ssurapan/shoestring/build /n/eecs583b/home/ssurapan/shoestring/build /n/eecs583b/home/ssurapan/shoestring/build/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /n/eecs583b/home/ssurapan/EECS573_Final/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583b/home/ssurapan/EECS573_Final /n/eecs583b/home/ssurapan/EECS573_Final /n/eecs583b/home/ssurapan/EECS573_Final/build /n/eecs583b/home/ssurapan/EECS573_Final/build /n/eecs583b/home/ssurapan/EECS573_Final/build/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/intrinsics_gen.dir/depend
 
