@@ -86,7 +86,7 @@ clang ${source_program}.tfr.bc -o ${source_program}_tfr
 
 echo -e "=== Correctness Check ==="
 echo ">> Does the custom pass maintain correct program behavior?"
-if [ "$(diff correct_output ispre_output)" != "" ]; then
+if [ "$(diff correct_output tfr_output)" != "" ]; then
     echo -e ">> FAIL\n"
 else
     echo -e ">> PASS\n"
