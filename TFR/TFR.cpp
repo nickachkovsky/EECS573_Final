@@ -40,7 +40,7 @@ namespace TFR
             // depth first traversal of the producer tree
 
             // base case: no more producers or instuction in duplicated instr already
-            if (duplicatedInstr.count(I) > 0)
+            if (duplicatedInstr.count(I) > 0 || isa<AllocaInst>(I))
             {
                 return;
             }
@@ -76,6 +76,8 @@ namespace TFR
         bool runOnFunction(Function &F) override
         {
             BasicBlock &entry = F.getEntryBlock();
+            Instruction *first = entry.getFirstNonPHI();
+            BasicBlock *goTo = entry.splitBasicBlock(first);
             std::map<Instruction *, Instruction *> duplicatedInstr;
             ValueToValueMapTy vmap;
             std::vector<Instruction *> store_instructions;
@@ -97,10 +99,6 @@ namespace TFR
             int count = 0;
             for (auto i : store_instructions)
             {   
-                // if(count == 1){
-                //     break;
-                // }
-                // ++count;
                 for (Use &U : i->operands())
                 {
                     Instruction *Inst = dyn_cast<Instruction>(U);
@@ -113,18 +111,17 @@ namespace TFR
                     {
                         // Insert compare
                         BasicBlock *parent = i->getParent();
-                        Instruction *terminator = parent->getTerminator();
                         Instruction *dup = duplicatedInstr[Inst];
                         IRBuilder<> IRB(parent);
                         IRB.SetInsertPoint(i);
                         Value *compare = IRB.CreateICmpNE(Inst, dup);
                         Instruction *cast = dyn_cast<Instruction>(compare);
-                        cast->getNextNode()->print(errs());
                         //create new bb for compare
-                        parent->splitBasicBlock(cast->getNextNode());
-
-                        // BranchInst* branch = IRB.CreateCondBr(compare,&entry,split);
-                        // terminator->eraseFromParent();
+                        BasicBlock *split = parent->splitBasicBlock(cast->getNextNode());
+                        Instruction *terminator = cast->getParent()->getTerminator();
+                        IRB.SetInsertPoint(terminator);
+                        BranchInst* branch = IRB.CreateCondBr(compare,goTo,split);
+                        terminator->eraseFromParent();
                     }
                 }
                 // i->print(errs());
