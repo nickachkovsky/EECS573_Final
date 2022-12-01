@@ -94,9 +94,13 @@ namespace TFR
                     }
                 }
             }
-
+            int count = 0;
             for (auto i : store_instructions)
-            {
+            {   
+                // if(count == 1){
+                //     break;
+                // }
+                // ++count;
                 for (Use &U : i->operands())
                 {
                     Instruction *Inst = dyn_cast<Instruction>(U);
@@ -107,15 +111,20 @@ namespace TFR
 
                     if (duplicatedInstr.count(Inst) > 0)
                     {
-                        BasicBlock *parent = Inst->getParent();
+                        // Insert compare
+                        BasicBlock *parent = i->getParent();
                         Instruction *terminator = parent->getTerminator();
                         Instruction *dup = duplicatedInstr[Inst];
                         IRBuilder<> IRB(parent);
                         IRB.SetInsertPoint(i);
                         Value *compare = IRB.CreateICmpNE(Inst, dup);
-                        compare->print(errs());
+                        Instruction *cast = dyn_cast<Instruction>(compare);
+                        cast->getNextNode()->print(errs());
+                        //create new bb for compare
+                        parent->splitBasicBlock(cast->getNextNode());
+
                         // BranchInst* branch = IRB.CreateCondBr(compare,&entry,split);
-                        //  terminator->eraseFromParent();
+                        // terminator->eraseFromParent();
                     }
                 }
                 // i->print(errs());
