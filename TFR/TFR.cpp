@@ -18,6 +18,7 @@
 #include "llvm/Transforms/Utils/BasicBlockUtils.h"
 #include "llvm/Transforms/Utils/LoopUtils.h"
 #include "llvm/Transforms/Utils/ValueMapper.h"
+#include "llvm/IR/IRBuilder.h"
 
 #include <map>
 #include <string>
@@ -33,36 +34,39 @@ namespace TFR
     {
         static char ID;
 
-
         TFRPass() : FunctionPass(ID) {}
-        void duplicateInstr(Instruction* I, std::map<Instruction*,Instruction*> &duplicatedInstr, ValueToValueMapTy &vmap, std::vector<llvm::Instruction*> new_instructions){
-            //depth first traversal of the producer tree
-            
-            //base case: no more producers or instuction in duplicated instr already
-            if(duplicatedInstr.count(I) > 0){
+        void duplicateInstr(Instruction *I, std::map<Instruction *, Instruction *> &duplicatedInstr, ValueToValueMapTy &vmap)
+        {
+            // depth first traversal of the producer tree
+
+            // base case: no more producers or instuction in duplicated instr already
+            if (duplicatedInstr.count(I) > 0)
+            {
                 return;
             }
 
-            for (Use &U : I->operands()) {
+            for (Use &U : I->operands())
+            {
                 Instruction *Inst = dyn_cast<Instruction>(U);
-                if(nullptr == Inst){
+                if (nullptr == Inst)
+                {
                     continue;
                 }
-                I->print(errs());
-                errs() << "-";
-                Inst->print(errs());
-                errs() << "\n";
-                duplicateInstr(Inst,duplicatedInstr,vmap,new_instructions);
+                // I->print(errs());
+                // errs() << "-";
+                // Inst->print(errs());
+                // errs() << "\n";
 
+                duplicateInstr(Inst, duplicatedInstr, vmap);
             }
 
-            if(!isa<StoreInst>(I)){
+            if (!isa<StoreInst>(I))
+            {
                 auto *clone_inst = I->clone();
                 clone_inst->insertBefore(I);
-                new_instructions.push_back(clone_inst);
                 vmap[I] = clone_inst;
                 llvm::RemapInstruction(clone_inst, vmap,
-                         RF_NoModuleLevelChanges | RF_IgnoreMissingLocals);
+                                       RF_NoModuleLevelChanges | RF_IgnoreMissingLocals);
                 duplicatedInstr[I] = clone_inst;
             }
 
@@ -71,11 +75,11 @@ namespace TFR
 
         bool runOnFunction(Function &F) override
         {
-            std::map<Instruction*,Instruction*> duplicatedInstr;
+            BasicBlock &entry = F.getEntryBlock();
+            std::map<Instruction *, Instruction *> duplicatedInstr;
             ValueToValueMapTy vmap;
-            std::vector<Instruction*> new_instructions;
+            std::vector<Instruction *> store_instructions;
 
-            
             for (BasicBlock &BB : F)
             {
                 errs() << BB.getName() << "\n";
@@ -83,10 +87,39 @@ namespace TFR
                 {
                     // I.print(errs());
                     // errs() << " - " << I.getNumOperands() << "\n";
-                    if(isa<StoreInst>(I)){
-                        duplicateInstr(&I,duplicatedInstr,vmap,new_instructions);
+                    if (isa<StoreInst>(I))
+                    {
+                        store_instructions.push_back(&I);
+                        duplicateInstr(&I, duplicatedInstr, vmap);
                     }
                 }
+            }
+
+            for (auto i : store_instructions)
+            {
+                for (Use &U : i->operands())
+                {
+                    Instruction *Inst = dyn_cast<Instruction>(U);
+                    if (nullptr == Inst)
+                    {
+                        continue;
+                    }
+
+                    if (duplicatedInstr.count(Inst) > 0)
+                    {
+                        BasicBlock *parent = Inst->getParent();
+                        Instruction *terminator = parent->getTerminator();
+                        Instruction *dup = duplicatedInstr[Inst];
+                        IRBuilder<> IRB(parent);
+                        IRB.SetInsertPoint(i);
+                        Value *compare = IRB.CreateICmpNE(Inst, dup);
+                        compare->print(errs());
+                        // BranchInst* branch = IRB.CreateCondBr(compare,&entry,split);
+                        //  terminator->eraseFromParent();
+                    }
+                }
+                // i->print(errs());
+                // errs() << " " << parent->getName() << "\n";
             }
             return true;
         }

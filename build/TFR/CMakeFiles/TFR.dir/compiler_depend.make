@@ -457,12 +457,17 @@ TFR/CMakeFiles/TFR.dir/TFR.cpp.o: ../TFR/TFR.cpp \
   /usr/local/include/llvm/Transforms/Utils/BasicBlockUtils.h \
   /usr/local/include/llvm/ADT/SetVector.h \
   /usr/local/include/llvm/Analysis/DomTreeUpdater.h \
+  /usr/local/include/llvm/IR/IRBuilder.h \
+  /usr/local/include/llvm/IR/ConstantFolder.h \
+  /usr/local/include/llvm/IR/IRBuilderFolder.h \
   /usr/include/c++/11/map \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h
 
 
 /usr/include/c++/11/bits/stl_multimap.h:
+
+/usr/local/include/llvm/IR/IRBuilderFolder.h:
 
 /usr/local/include/llvm/Analysis/DomTreeUpdater.h:
 
@@ -577,6 +582,8 @@ TFR/CMakeFiles/TFR.dir/TFR.cpp.o: ../TFR/TFR.cpp \
 /usr/local/include/llvm/IR/GlobalVariable.h:
 
 /usr/local/include/llvm/IR/GlobalAlias.h:
+
+/usr/local/include/llvm/IR/IRBuilder.h:
 
 /usr/local/include/llvm/ADT/APInt.h:
 
@@ -1243,6 +1250,8 @@ TFR/CMakeFiles/TFR.dir/TFR.cpp.o: ../TFR/TFR.cpp \
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+/usr/local/include/llvm/IR/ConstantFolder.h:
 
 /usr/include/c++/11/bits/charconv.h:
 

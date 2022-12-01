@@ -392,5 +392,8 @@ TFR/CMakeFiles/TFR.dir/TFR.cpp.o: \
  /usr/local/include/llvm/Transforms/Utils/BasicBlockUtils.h \
  /usr/local/include/llvm/ADT/SetVector.h \
  /usr/local/include/llvm/Analysis/DomTreeUpdater.h \
- /usr/include/c++/11/map /usr/include/c++/11/bits/stl_map.h \
+ /usr/local/include/llvm/IR/IRBuilder.h \
+ /usr/local/include/llvm/IR/ConstantFolder.h \
+ /usr/local/include/llvm/IR/IRBuilderFolder.h /usr/include/c++/11/map \
+ /usr/include/c++/11/bits/stl_map.h \
  /usr/include/c++/11/bits/stl_multimap.h
