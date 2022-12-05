@@ -114,8 +114,8 @@ namespace TFR
                         IRB.SetInsertPoint(i);
                         Value *compare = IRB.CreateICmpNE(Inst, dup);
                         compare->print(errs());
-                        // BranchInst* branch = IRB.CreateCondBr(compare,&entry,split);
-                        //  terminator->eraseFromParent();
+                        // BranchInst *branch = IRB.CreateCondBr(compare, &entry, split);
+                        // terminator->eraseFromParent();
                     }
                 }
                 // i->print(errs());
