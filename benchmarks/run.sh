@@ -55,7 +55,7 @@ fi
 
 # Get command line arguments
 source_program=${1}
-passes=${2:-"-tfr"}
+passes=${2:-"-tfrmin"}
 llvm_library="../build/TFR/TFR.so"
 
 # Delete outputs from any previous runs
