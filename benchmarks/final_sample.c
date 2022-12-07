@@ -8,10 +8,12 @@ int main()
     int z = 15;
     if (y == z)
     {
-        return 0;
+        int l = z + x;
+        return l;
     }
     else
     {
-        return 1;
+        int l = z + y;
+        return l;
     }
 }
