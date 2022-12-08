@@ -56,6 +56,8 @@ fi
 # Get command line arguments
 source_program=${1}
 passes=${2:-"-tfr"}
+passes1=${2:-"-tfrmin"}
+passes2=${2:-"-tfrand"}
 llvm_library="../build/TFR/TFR.so"
 
 # Delete outputs from any previous runs
@@ -75,11 +77,13 @@ llvm-profdata merge -o ${source_program}.profdata default.profraw
 # Use opt three times to compile with specific passes
 opt -enable-new-pm=0 -o ${source_program}.none.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata < ${source_program}.bc > /dev/null
 opt -enable-new-pm=0 -o ${source_program}.tfr.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata -load ${llvm_library} ${passes} < ${source_program}.bc > /dev/null
+opt -enable-new-pm=0 -o ${source_program}.tfrmin.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata -load ${llvm_library} ${passes1} < ${source_program}.bc > /dev/null
+opt -enable-new-pm=0 -o ${source_program}.tfrand.bc -pgo-instr-use -pgo-test-profile-file=${1}.profdata -load ${llvm_library} ${passes2} < ${source_program}.bc > /dev/null
 
 # Generate binary excutable before TFR: Unoptimized code
 clang ${source_program}.none.bc -o ${source_program}_no_tfr
 # Generate binary executable after TFR: Our optimized code
-clang ${source_program}.tfr.bc -o ${source_program}_tfr
+clang ${source_program}.tfrand.bc -o ${source_program}_tfr
 
 # Produce output from binary to check correctness
 ./${source_program}_tfr > tfr_output
@@ -95,7 +99,7 @@ else
     bcanalysis_unoptimized="$($bcanalyzer_unoptimized)"
     bytes_unoptimized=$(get_bytes_from_bcanalysis "${bcanalysis_unoptimized}")
 
-    bcanalyzer_optimized="llvm-bcanalyzer ${source_program}.tfr.bc"
+    bcanalyzer_optimized="llvm-bcanalyzer ${source_program}.tfrand.bc"
     bcanalysis_optimized="$($bcanalyzer_optimized)"
     bytes_optimized=$(get_bytes_from_bcanalysis "${bcanalysis_optimized}")
 
